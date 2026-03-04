@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweetie. Chatbot de Postres</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Conversaciones</h3>
+            <button class="close-sidebar-btn" id="closeSidebarBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <button class="new-chat-btn-sidebar" id="newChatBtn">
+            <i class="fa-solid fa-plus"></i> Nueva conversación
+        </button>
+
+        <div class="conversation-list" id="conversation-list">
+            <div class="conversation-item active">
+                <span class="convo-icon">🧁</span>
+                <div class="convo-info">
+                    <span class="convo-name">Bienvenida</span>
+                    <span class="convo-preview">¿Qué horneamos?</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <header>
+            <button class="menu-btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div class="pastelito-icon-container">
+                <img src="pastelito.png" alt="Pastelito" class="pastelito-icon">
+            </div>
+
+            <h1>Sweetie 🍰</h1>
+            <p>Tu asistente de repostería</p>
+        </header>
+
+        <div class="chat-box" id="chat-box"></div>
+
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Escribe aquí..." autofocus>
+            <button id="send-btn"></button>
+        </div>
+    </div>
+
+    <div class="sweetie-widget">
+        <div class="widget-bubble">Chatea con nosotros</div>
+        <div class="widget-icon">
+            <img src="pastelito.png" alt="Sweetie Icon">
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
