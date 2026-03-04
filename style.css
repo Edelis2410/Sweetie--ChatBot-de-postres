@@ -1,3 +1,10 @@
+/* 
+    Estilos principales
+    Define la apariencia del chatbot, incluyendo el teléfono, sidebar, widget flotante y animaciones.
+    
+*/
+
+
 /* =========================================
    1. CONFIGURACIÓN GENERAL Y FONDO
    ========================================= */
@@ -112,7 +119,7 @@ body {
 /* Efecto al pasar el mouse (Hover) */
 .conversation-item:hover {
     background: #fff;
-    border-color: #FF007F; /* Cambia al color de Sweetie */
+    border-color: #FF007F; 
     transform: translateX(5px);
     box-shadow: 0 4px 12px rgba(255, 0, 127, 0.1);
 }
@@ -349,7 +356,7 @@ header p {
 #send-btn::after { content: "➤"; font-size: 18px; }
 
 /* =========================================
-   8. WIDGET FLOTANTE (UNIFICADO Y PROFESIONAL)
+   8. WIDGET FLOTANTE 
    ========================================= */
 .sweetie-widget {
     position: fixed;
@@ -417,7 +424,7 @@ header p {
     transition: all 0.3s ease;
 }
 
-/* --- EFECTO HOVER UNIFICADO --- */
+/* --- EFECTO HOVER  --- */
 
 .sweetie-widget:hover .widget-bubble {
     background: #FF007F;
@@ -427,11 +434,11 @@ header p {
 }
 
 .sweetie-widget:hover .widget-bubble::after {
-    border-left-color: #FF007F; /* El pico también cambia a fucsia */
+    border-left-color: #FF007F; 
 }
 
 .sweetie-widget:hover .widget-icon {
-    border-color: #FF007F; /* AHORA EL CÍRCULO SE MARCA EN FUCSIA FUERTE */
+    border-color: #FF007F; 
     background: white; 
     transform: scale(1.05) rotate(8deg);
     box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
