@@ -174,6 +174,11 @@ body {
     z-index: 10;
 }
 
+.chat-container.expanded {
+    width: 700px;
+    height: 750px;
+}
+
 /* =========================================
    4. ICONO PASTELITO TELÉFONO
    ========================================= */
@@ -463,3 +468,117 @@ header p {
 
 .chat-box::-webkit-scrollbar { width: 4px; }
 .chat-box::-webkit-scrollbar-thumb { background: rgba(255, 0, 127, 0.2); border-radius: 10px; }
+
+/*Estilos del boton eliminar*/
+.delete-convo-btn{
+    margin-left:auto;
+    background:none;
+    border:none;
+    color:#999;
+    cursor:pointer;
+    font-size:14px;
+    opacity:0;
+    transition:opacity 0.2s, color 0.2s;
+}
+
+/* aparece al pasar el mouse */
+.conversation-item:hover .delete-convo-btn{
+    opacity:1;
+}
+
+/* efecto hover */
+.delete-convo-btn:hover{
+    color:#FF007F;
+}
+
+/*Estilos para eliminar conversacion*/
+/* ================================
+   MODAL ELIMINAR CONVERSACIÓN
+================================ */
+
+.delete-modal{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:5000;
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s;
+}
+
+.delete-modal.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.delete-modal-content{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    width:280px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+    animation:fadeIn 0.3s ease;
+}
+
+.delete-modal-icon{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.delete-modal-content h3{
+    color:#FF007F;
+    margin-bottom:10px;
+}
+
+.delete-modal-content p{
+    font-size:14px;
+    color:#666;
+}
+
+.delete-modal-buttons{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+}
+
+.cancel-btn{
+    padding:8px 16px;
+    border:none;
+    border-radius:12px;
+    background:#eee;
+    cursor:pointer;
+}
+
+.confirm-btn{
+    padding:8px 16px;
+    border:none;
+    border-radius:12px;
+    background:#FF007F;
+    color:white;
+    cursor:pointer;
+}
+
+.confirm-btn:hover{
+    background:#e60072;
+}
+
+.expand-btn {
+    position: absolute;
+    top: 48px;
+    right: 22px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #444;
+    cursor: pointer;
+    z-index: 600;
+}

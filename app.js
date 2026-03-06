@@ -8,16 +8,24 @@
 
 // Configuración de Ollama
 const API_URL = 'http://localhost:11434/api/chat';
-const MODEL = 'gemma3:1b';
+const MODEL = 'gemma3:4b';
 
 // Elementos del DOM
 const chatBox = document.getElementById('chat-box');
 const userInput = document.getElementById('user-input');
+const sweetieWidget = document.querySelector('.sweetie-widget');
 const sendBtn = document.getElementById('send-btn');
 const menuBtn = document.getElementById('menuBtn');
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
 const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+const deleteModal = document.getElementById('deleteModal');
+const confirmDeleteBtn = document.getElementById('confirmDelete');
+const cancelDeleteBtn = document.getElementById('cancelDelete');
+const expandBtn = document.getElementById('expandBtn');
+const chatContainer = document.querySelector('.chat-container');
+
+let conversationToDelete = null;
 
 // --- REFERENCIAS PARA EL HISTORIAL ---
 const conversationList = document.getElementById('conversation-list');
@@ -85,6 +93,36 @@ function createNewConversation(withWelcome = true) {
     return newConv;
 }
 
+// Eminina una nueva conversación 
+function deleteConversation(conversationId){
+    conversationToDelete = conversationId;
+    deleteModal.classList.add("active");
+}
+
+confirmDeleteBtn.addEventListener("click", () => {
+
+    conversations = conversations.filter(c => c.id !== conversationToDelete);
+    if(activeConversationId === conversationToDelete){
+        if(conversations.length > 0){
+            activeConversationId = conversations[conversations.length-1].id;
+        }else{
+            createNewConversation(true);
+        }
+    }
+
+    saveConversationsToStorage();
+    renderSidebar();
+    renderActiveConversation();
+
+    deleteModal.classList.remove("active");
+    conversationToDelete = null;
+});
+
+cancelDeleteBtn.addEventListener("click", () => {
+    deleteModal.classList.remove("active");
+    conversationToDelete = null;
+});
+
 // Renderizar el chat con los mensajes de la conversación activa
 function renderActiveConversation() {
     const conv = conversations.find(c => c.id === activeConversationId);
@@ -124,7 +162,17 @@ function renderSidebar() {
                 <span class="convo-name">${title}</span>
                 <span class="convo-preview">${conv.messages.length-1} mensajes</span>
             </div>
+
+            <button class="delete-convo-btn" data-id="${conv.id}">
+                <i class="fa-solid fa-trash"></i>
+            </button>
         `;
+        const deleteBtn = item.querySelector('.delete-convo-btn');
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            deleteConversation(conv.id);
+        });
+
         item.addEventListener('click', () => {
             activeConversationId = conv.id;
             renderActiveConversation();
@@ -287,7 +335,13 @@ function closeSidebar() {
     overlay.classList.remove('active');
 }
 
-menuBtn.addEventListener('click', openSidebar);
+menuBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
 closeSidebarBtn.addEventListener('click', closeSidebar);
 overlay.addEventListener('click', closeSidebar);
 
@@ -301,6 +355,15 @@ if (newChatBtn) {
     });
 }
 
+// --- Evento del widget flotante ---
+if (sweetieWidget) {
+    sweetieWidget.addEventListener('click', () => {
+        createNewConversation(true);
+        renderActiveConversation();
+        renderSidebar();
+        openSidebar();
+    });
+}
 // --- Eventos de envío de mensajes ---
 sendBtn.addEventListener('click', sendToOllama);
 userInput.addEventListener('keypress', (e) => {
@@ -311,3 +374,22 @@ userInput.addEventListener('keypress', (e) => {
 window.addEventListener('load', () => {
     loadFromStorage();
 });
+
+// --- Expandir chat formato  ---
+if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+
+        chatContainer.classList.toggle('expanded');
+
+        const icon = expandBtn.querySelector('i');
+
+        if (chatContainer.classList.contains('expanded')) {
+            icon.classList.remove('fa-expand');
+            icon.classList.add('fa-compress');
+        } else {
+            icon.classList.remove('fa-compress');
+            icon.classList.add('fa-expand');
+        }
+
+    });
+}
