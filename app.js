@@ -32,12 +32,15 @@ const conversationList = document.getElementById('conversation-list');
 const newChatBtn = document.getElementById('newChatBtn');
 
 // System prompt base (se usará en todas las conversaciones)
-const SYSTEM_PROMPT = `Eres Sweetie, una chef pastelera experta con 20 años de experiencia. 
+const SYSTEM_PROMPT = `Eres Sweetie, una chef pastelera experta con mas de 20 años de experiencia. 
 Tu misión es dar recetas de postres claras, cortas y directas.
-DEBES seguir estas reglas estrictamente:
-1. Formato: INGREDIENTES (con guiones) y PROCEDIMIENTO (numerado).
-2. Si el usuario te da ingredientes, recomiéndale qué postre puede hacer.
-3. Responde en español, con tono amigable y emojis.`;
+
+REGLAS DE COMPORTAMIENTO:
+1. FUERA DE TEMA: Si te preguntan algo que NO sea de repostería (ej. política, historia, programación), responde de forma muy amable pero breve: "¡Ups! Mi horno solo cocina dulces. 🥧 No sé de ese tema, pero puedo darte una receta de galletas si quieres."
+2. CONTINUIDAD: Si el usuario te pregunta sobre un paso anterior o algo de la receta pasada, inicia tu respuesta diciendo: "¡Claro! Dándole continuidad a lo que preparábamos..." o "Sobre esa deliciosa receta anterior, te explico...".
+3. REQUISITOS NUEVOS: Si el usuario pide algo totalmente nuevo, saluda con entusiasmo: "¡Manos a la obra! Aquí tienes una nueva delicia:".
+4. FORMATO: Usa negritas para títulos. Lista de INGREDIENTES (con guiones) y PROCEDIMIENTO (numerado).
+5. TONO: Dulce, profesional y usa muchos emojis de postres 🍰🍩🧁. Responde siempre en español.`;
 
 // Estructura de conversaciones
 let conversations = [];
@@ -308,6 +311,9 @@ async function sendToOllama() {
         // Añadir respuesta del bot
         activeConv.messages.push({ role: 'assistant', content: botReply });
         addMessageToDOM(botReply, 'bot');
+        
+        // Cambiar el fondo según la receta
+        cambiarFondoPorReceta(botReply);
 
         // Limitar historial (opcional)
         trimHistory(activeConv);
@@ -344,6 +350,27 @@ menuBtn.addEventListener('click', () => {
 });
 closeSidebarBtn.addEventListener('click', closeSidebar);
 overlay.addEventListener('click', closeSidebar);
+
+
+function cambiarFondoPorReceta(respuestaBot){
+    const texto = respuestaBot.toLowerCase();
+    const fondo = document.getElementById('fondo');
+    let nuevaImagen = 'imagenes/fondo4.jpeg'; // default
+
+    if(texto.includes("chocolate") || texto.includes("brownies") || texto.includes("cafe")) nuevaImagen = "imagenes/chocolate.jpg";
+    else if(texto.includes("limón") || texto.includes("naranja")) nuevaImagen = "imagenes/limon.jpg";
+    else if(texto.includes("fresa") || texto.includes("fruta")) nuevaImagen = "imagenes/fresa.jpg";
+    else if(texto.includes("oreo") || texto.includes("galleta")) nuevaImagen = "imagenes/oreo.jpg";
+    else if(texto.includes("pan") || texto.includes("panes")) nuevaImagen = "imagenes/panaderia.jpg";
+    else if(texto.includes("torta") || texto.includes("cumpleaños")) nuevaImagen = "imagenes/torta.jpg";
+
+    // efecto fade
+    fondo.classList.add('fade-out');
+    setTimeout(() => {
+        fondo.style.backgroundImage = `url('${nuevaImagen}')`;
+        fondo.classList.remove('fade-out');
+    }, 300); // la mitad de la transición
+}
 
 // --- Evento de nueva conversación ---
 if (newChatBtn) {

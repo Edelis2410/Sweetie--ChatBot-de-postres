@@ -16,18 +16,34 @@
 }
 
 body {
-    background-image: url('fondo4.jpeg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 16px;
     overflow: hidden;
+    position: relative;
 }
+
+#fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.6s ease-in-out;
+    z-index: -1;
+    opacity: 1;
+}
+
+#fondo.fade-out {
+    opacity: 0;
+}
+
 
 /* =========================================
    2. SIDEBAR Y OVERLAY
@@ -156,7 +172,7 @@ body {
 }
 
 /* =========================================
-   3. EL TELÉFONO (ANCHO Y TRANSPARENTE)
+    3. EL TELÉFONO (ANCHO Y TRANSPARENTE)
    ========================================= */
 .chat-container {
     width: 360px; 
